@@ -1,7 +1,7 @@
 name: elhosaraty_image
-description: A new Flutter package project.
+description: A new Flutter package project with a some Packages.
 version: 0.0.1
-homepage:
+homepage: https://github.com/MohamedElhosaraty/new_package.git
 
 environment:
   sdk: '>=2.19.2 <3.0.0'

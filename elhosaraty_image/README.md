@@ -1,39 +1,143 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# carousel_slider
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A carousel slider widget.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* Infinite scroll
+* Custom child widgets
+* Auto play
 
-## Getting started
+## Supported platforms
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+* Flutter Android
+* Flutter iOS
+* Flutter web
+* Flutter desktop
 
-## Usage
+## Live preview
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+https://serenader2014.github.io/flutter_carousel_slider/#/
+
+Note: this page is built with flutter-web. For a better user experience, please use a mobile device to open this link.
+
+## Installation
+
+Add `carousel_slider: ^4.2.1` to your `pubspec.yaml` dependencies. And import it:
 
 ```dart
-const like = 'sample';
+import 'package:carousel_slider/carousel_slider.dart';
 ```
 
-## Additional information
+## How to use
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Simply create a `CarouselSlider` widget, and pass the required params:
+
+
+Since `v2.0.0`, you'll need to pass the options to `CarouselOptions`. For each option's usage you can refer to [carousel_options.dart](./lib/carousel_options.dart).
+
+**If you pass the `height` parameter, the `aspectRatio` parameter will be ignored.**
+
+## Build item widgets on demand
+
+This method will save memory by building items once it becomes necessary. This way they won't be built if they're not currently meant to be visible on screen.
+It can be used to build different child item widgets related to content or by item index.
+
+```dart
+
+
+```
+
+## Carousel controller
+
+In order to manually control the pageview's position, you can create your own `CarouselController`, and pass it to `CarouselSlider`. Then you can use the `CarouselController` instance to manipulate the position.
+
+```dart 
+class CarouselDemo extends StatelessWidget {
+  CarouselController buttonCarouselController = CarouselController();
+
+ @override
+  Widget build(BuildContext context) => Column(
+    children: <Widget>[
+      CarouselSlider(
+        items: child,
+        carouselController: buttonCarouselController,
+        options: CarouselOptions(
+          autoPlay: false,
+          enlargeCenterPage: true,
+          viewportFraction: 0.9,
+          aspectRatio: 2.0,
+          initialPage: 2,
+        ),
+      ),
+      RaisedButton(
+        onPressed: () => buttonCarouselController.nextPage(
+            duration: Duration(milliseconds: 300), curve: Curves.linear),
+        child: Text('→'),
+      )
+    ]
+  );
+}
+```
+
+### `CarouselController` methods
+
+#### `.nextPage({Duration duration, Curve curve})`
+
+Animate to the next page
+
+#### `.previousPage({Duration duration, Curve curve})`
+
+Animate to the previous page
+
+#### `.jumpToPage(int page)`
+
+Jump to the given page.
+
+#### `.animateToPage(int page, {Duration duration, Curve curve})`
+
+Animate to the given page.
+
+## Screenshot
+
+Basic text carousel demo:
+
+![simple](screenshot/basic.gif)
+
+Basic image carousel demo:
+
+![image](screenshot/image.gif)
+
+A more complicated image carousel slider demo:
+
+![complicated image](screenshot/complicated-image.gif)
+
+Fullscreen image carousel slider demo:
+
+![fullscreen](screenshot/fullscreen.gif)
+
+Image carousel slider with custom indicator demo:
+
+![indicator](screenshot/indicator.gif)
+
+Custom `CarouselController` and manually control the pageview position demo:
+
+![manual](screenshot/manually.gif)
+
+Vertical carousel slider demo:
+
+![vertical](screenshot/vertical.gif)
+
+Simple on-demand image carousel slider, with image auto prefetch demo:
+
+![prefetch](screenshot/preload.gif)
+
+No infinite scroll demo:
+
+![noloop](screenshot/noloop.gif)
+
+All screenshots above can be found at the example project.
+
+## License
+
+MIT
